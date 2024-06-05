@@ -13,6 +13,7 @@ const statuses = {
   Withdraw: 'text-gray-600 bg-gray-50 ring-gray-500/10',
   Low: 'text-red-700 bg-red-50 ring-red-600/10',
 }
+
 const clients = [
   {
     id: 1,
@@ -47,7 +48,7 @@ const clients = [
       status: 'Low',
     },
   },
-]
+] as const
 
 const classNames = (...classes: string[]) => classes.filter(Boolean).join(' ')
 
@@ -87,7 +88,7 @@ export function Clients() {
                   <MenuItem>
                     {({ focus }) => (
                       <a
-                        href="#"
+                        href="/"
                         className={classNames(
                           focus ? 'bg-gray-50' : '',
                           'block px-3 py-1 text-sm leading-6 text-gray-900'
@@ -100,7 +101,7 @@ export function Clients() {
                   <MenuItem>
                     {({ focus }) => (
                       <a
-                        href="#"
+                        href="/"
                         className={classNames(
                           focus ? 'bg-gray-50' : '',
                           'block px-3 py-1 text-sm leading-6 text-gray-900'
@@ -165,23 +166,28 @@ export function Stat({ title, value, change }: { title: string; value: string; c
 const plans = [
   {
     id: 1,
-    name: 'Hobby',
-    memory: '4 GB RAM',
-    cpu: '4 CPUs',
-    storage: '128 GB SSD disk',
-    price: '$40',
-    isCurrent: false,
+    name: 'FRAUD-001',
+    date: '2022-05-15',
+    sender: 'OVO',
+    receiver: 'Bank BCA',
+    customer: 'John Doe',
+    nik: '1234567890',
+    amount: '10000',
+    indication: 'Suspicious Activity',
+    transactionCount: 15,
   },
   {
     id: 2,
-    name: 'Startup',
-    memory: '8 GB RAM',
-    cpu: '6 CPUs',
-    storage: '256 GB SSD disk',
-    price: '$80',
-    isCurrent: true,
+    name: 'FRAUD-002',
+    date: '2022-05-15',
+    sender: 'Ajaib',
+    receiver: 'Bank BCA',
+    customer: 'John Doe',
+    nik: '1234567890',
+    amount: '10000',
+    indication: 'Suspicious Activity',
+    transactionCount: 15,
   },
-  // More plans...
 ]
 
 export function Table() {
@@ -223,6 +229,9 @@ export function Table() {
               </th>
               <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                 Transaction Amount
+              </th>{' '}
+              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                Indication
               </th>
               <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                 <span className="sr-only">Select</span>
@@ -234,26 +243,11 @@ export function Table() {
               <tr key={plan.id}>
                 <td
                   className={classNames(
-                    planIdx === 0 ? '' : 'border-t border-transparent',
+                    planIdx === 0 ? '' : 'border-t border-gray-200',
                     'relative py-4 pl-4 pr-3 text-sm sm:pl-6'
                   )}
                 >
-                  <div className="font-medium text-gray-900">
-                    {plan.name}
-                    {plan.isCurrent ? (
-                      <span className="ml-1 text-indigo-600">(Current Plan)</span>
-                    ) : null}
-                  </div>
-                  <div className="mt-1 flex flex-col text-gray-500 sm:block lg:hidden">
-                    <span>
-                      {plan.memory} / {plan.cpu}
-                    </span>
-                    <span className="hidden sm:inline">·</span>
-                    <span>{plan.storage}</span>
-                  </div>
-                  {planIdx !== 0 ? (
-                    <div className="absolute -top-px left-6 right-0 h-px bg-gray-200" />
-                  ) : null}
+                  <div className="font-medium text-gray-900">{plan.name}</div>
                 </td>
                 <td
                   className={classNames(
@@ -261,7 +255,7 @@ export function Table() {
                     'hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell'
                   )}
                 >
-                  {plan.memory}
+                  {plan.date}
                 </td>
                 <td
                   className={classNames(
@@ -269,7 +263,7 @@ export function Table() {
                     'hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell'
                   )}
                 >
-                  {plan.cpu}
+                  {plan.sender}
                 </td>
                 <td
                   className={classNames(
@@ -277,7 +271,15 @@ export function Table() {
                     'hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell'
                   )}
                 >
-                  {plan.storage}
+                  {plan.receiver}
+                </td>
+                <td
+                  className={classNames(
+                    planIdx === 0 ? '' : 'border-t border-gray-200',
+                    'hidden px-3 py-3.5 text-sm text-gray-500 lg:table-cell'
+                  )}
+                >
+                  {plan.customer}
                 </td>
                 <td
                   className={classNames(
