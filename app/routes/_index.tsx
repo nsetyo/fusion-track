@@ -7,6 +7,7 @@ import { Select } from '@/catalyst/select'
 import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react'
 import { EllipsisHorizontalIcon } from '@heroicons/react/20/solid'
 import { ArrowPathIcon } from '@heroicons/react/24/outline'
+import { ApplicationLayout } from '@/application-layout'
 
 const statuses = {
   High: 'text-green-700 bg-green-50 ring-green-600/20',
@@ -54,7 +55,7 @@ const classNames = (...classes: string[]) => classes.filter(Boolean).join(' ')
 
 export const meta: MetaFunction = () => {
   return [
-    { title: 'Fusion Track Client App' },
+    { title: 'Fusion Track App' },
     { name: 'description', content: 'Welcome to Fusion Track!' },
   ]
 }
@@ -227,7 +228,10 @@ export function Table() {
               <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                 NIK
               </th>
-              <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+              <th
+                scope="col"
+                className="px-3 py-3.5 text-right text-sm font-semibold text-gray-900"
+              >
                 Transaction Amount
               </th>{' '}
               <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
@@ -240,7 +244,7 @@ export function Table() {
           </thead>
           <tbody>
             {plans.map((plan, planIdx) => (
-              <tr key={plan.id}>
+              <tr key={planIdx}>
                 <td
                   className={classNames(
                     planIdx === 0 ? '' : 'border-t border-gray-200',
@@ -287,8 +291,23 @@ export function Table() {
                     'px-3 py-3.5 text-sm text-gray-500'
                   )}
                 >
-                  <div className="sm:hidden">{plan.price}/mo</div>
-                  <div className="hidden sm:block">{plan.price}/month</div>
+                  <div className="hidden sm:block">{plan.nik}</div>
+                </td>
+                <td
+                  className={classNames(
+                    planIdx === 0 ? '' : 'border-t border-gray-200',
+                    'px-3 py-3.5 text-sm text-gray-500 text-right'
+                  )}
+                >
+                  <div className="hidden sm:block">Rp {plan.amount}</div>
+                </td>
+                <td
+                  className={classNames(
+                    planIdx === 0 ? '' : 'border-t border-gray-200',
+                    'px-3 py-3.5 text-sm text-gray-500'
+                  )}
+                >
+                  <div className="hidden sm:block">{plan.indication}</div>
                 </td>
                 <td
                   className={classNames(
@@ -299,7 +318,6 @@ export function Table() {
                   <button
                     type="button"
                     className="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white"
-                    disabled={plan.isCurrent}
                   >
                     Select<span className="sr-only">, {plan.name}</span>
                   </button>
@@ -318,7 +336,7 @@ export function Table() {
 
 export default function Home() {
   return (
-    <>
+    <ApplicationLayout>
       <Heading>Good afternoon, Jessica</Heading>
 
       <div className="mt-8 flex items-end justify-between">
@@ -340,7 +358,7 @@ export default function Home() {
         <Stat title="Recall" value="88%" change="+4.5%" />
         <Stat title="Alert Count" value="823,067" change="+21.2%" />
       </div>
-      <div className="flex items-center justify-between mt-8 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
+      <div className="flex items-center justify-between mt-10 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
         <h2 className="text-base font-semibold leading-7 text-gray-900">Recent clients</h2>
         <a
           href="/"
@@ -352,7 +370,7 @@ export default function Home() {
       <div className="mt-4 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
         <Clients />
       </div>
-      <div className="flex items-center justify-between mt-8 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
+      <div className="flex items-center justify-between mt-10 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
         <h2 className="text-base font-semibold leading-7 text-gray-900">
           Fraud Detection in BI-Fast Transactions
         </h2>
@@ -362,9 +380,7 @@ export default function Home() {
           </button>
         </div>
       </div>
-      <div className="mt-4 [--gutter:theme(spacing.6)] lg:[--gutter:theme(spacing.10)]">
-        <Table />
-      </div>
-    </>
+      <Table />
+    </ApplicationLayout>
   )
 }
